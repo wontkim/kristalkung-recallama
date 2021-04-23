@@ -40,7 +40,7 @@ class Food(db.Model):
     user = db.relationship('User', backref='foods')
 
     def __repr__(self):
-        return f'<Food recall_number={self.recall_number}, recalling_firm={recalling_firm}, status={self.status}>'
+        return f'<Food recall_number={self.recall_number}, recalling_firm={self.recalling_firm}, status={self.status}>'
 
 
 class Drug(db.Model):
@@ -63,7 +63,7 @@ class Drug(db.Model):
     user = db.relationship('User', backref='drugs')
 
     def __repr__(self):
-        return f'<Drug recall_number={self.recall_number}, recalling_firm={recalling_firm}, status={self.status}>'
+        return f'<Drug recall_number={self.recall_number}, recalling_firm={self.recalling_firm}, status={self.status}>'
 
 
 
