@@ -1,6 +1,15 @@
-from model import db, User, Movie, Rating, connect_to_db
+from datetime import datetime
+from model import db, User, Food, Drug, connect_to_db
 
+def create_user(fname, lname, email, password):
+    """Create and return a new user."""
 
+    user = User(fname=fname, lname=lname, email=email, password=password)
+
+    db.session.add(user)
+    db.session.commit()
+
+    return user
 
 
 # this will connect to the database when running crud.py interactively
