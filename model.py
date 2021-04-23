@@ -37,8 +37,6 @@ class Food(db.Model):
     recall_initiation_date = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.String, nullable=False)
 
-    user = db.relationship('User', backref='foods')
-
     def __repr__(self):
         return f'<Food recall_number={self.recall_number}, recalling_firm={self.recalling_firm}, status={self.status}>'
 
@@ -60,14 +58,33 @@ class Drug(db.Model):
     recall_initiation_date = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.String, nullable=False)
 
-    user = db.relationship('User', backref='drugs')
-
     def __repr__(self):
         return f'<Drug recall_number={self.recall_number}, recalling_firm={self.recalling_firm}, status={self.status}>'
 
+class Favorite(db.Model):
+    """A recall search, a favorite, saved to a user's profile."""
+
+    __tablename__ = 'favorites'
+
+    favorite_id = db.Column(db.Integer,
+                            autoincrement=True,
+                            primary_key=True,
+                            nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    food_id = db.Column(db.Integer, db.ForeignKey('foods.food_id'))
+    drug_id = db.Column(db.Integer, db.ForeignKey('drugs.drug_id'))
+    comments = db.Column(db.String, nullable=True)
+
+    user = db.relationship('User', backref='favorites')
+    food = db.relationship('Food', backref='favorites')
+    drug = db.relationship('Drug', backref='favorites')
 
 
-def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+    def __repr__(self):
+        return f'<SavedSearch >'
+
+
+def connect_to_db(flask_app, db_uri='postgresql:///foods', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
