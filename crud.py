@@ -1,5 +1,5 @@
 from datetime import datetime
-from model import db, User, Food, Drug, connect_to_db
+from model import db, User, Food, Drug, Favorite, connect_to_db
 
 def create_user(fname, lname, email, password):
     """Create and return a new user."""

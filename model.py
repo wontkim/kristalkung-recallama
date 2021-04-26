@@ -71,8 +71,8 @@ class Favorite(db.Model):
                             primary_key=True,
                             nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    food_id = db.Column(db.Integer, db.ForeignKey('foods.food_id'))
-    drug_id = db.Column(db.Integer, db.ForeignKey('drugs.drug_id'))
+    food_id = db.Column(db.Integer, db.ForeignKey('foods.food_id'), nullable=True)
+    drug_id = db.Column(db.Integer, db.ForeignKey('drugs.drug_id'), nullable=True)
     comments = db.Column(db.String, nullable=True)
 
     user = db.relationship('User', backref='favorites')
@@ -81,7 +81,7 @@ class Favorite(db.Model):
 
 
     def __repr__(self):
-        return f'<SavedSearch >'
+        return f'<Favorite user_id={self.user_id}, food_id={self.food_id}, drug_id={self.drug_id}, comments={self.comments}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///foods', echo=True):
