@@ -62,7 +62,7 @@ class Drug(db.Model):
         return f'<Drug recall_number={self.recall_number}, recalling_firm={self.recalling_firm}, status={self.status}>'
 
 class Favorite(db.Model):
-    """A recall search, a favorite, saved to a user's profile."""
+    """Favorite a recall and can add a comment."""
 
     __tablename__ = 'favorites'
 
@@ -73,7 +73,7 @@ class Favorite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     food_id = db.Column(db.Integer, db.ForeignKey('foods.food_id'), nullable=True)
     drug_id = db.Column(db.Integer, db.ForeignKey('drugs.drug_id'), nullable=True)
-    comments = db.Column(db.String, nullable=True)
+    comment = db.Column(db.String, nullable=True)
 
     user = db.relationship('User', backref='favorites')
     food = db.relationship('Food', backref='favorites')
@@ -81,7 +81,7 @@ class Favorite(db.Model):
 
 
     def __repr__(self):
-        return f'<Favorite user_id={self.user_id}, food_id={self.food_id}, drug_id={self.drug_id}, comments={self.comments}>'
+        return f'<Favorite user_id={self.user_id}, food_id={self.food_id}, drug_id={self.drug_id}, comment={self.comment}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///foods', echo=True):
