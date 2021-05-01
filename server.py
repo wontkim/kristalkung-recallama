@@ -19,7 +19,17 @@ def homepage():
     """View homepage."""
     return render_template('homepage.html')
 
+@app.route('/login')
+def login():
+    """View login page."""
+    
+    return render_template('login.html')
 
+@app.route('/signup')
+def signup():
+    """View sign up page."""
+
+    return render_template('signup.html')
 
 
 if __name__ == '__main__':
