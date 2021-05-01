@@ -1,0 +1,63 @@
+"""Script to seed database."""
+
+import os
+import json
+from random import choice, randint
+from datetime import datetime
+
+import crud
+import model
+import server
+
+os.system('dropdb recalls')
+os.system('createdb recalls')
+
+model.connect_to_db(server.app)
+model.db.create_all()
+
+
+# Load food recall data from JSON file
+with open('data/food-recalls.json') as food_recalls:
+    food_recall_data = json.loads(food_recalls.read())
+
+# Create recalls, store them in list so we can use them
+# to create fake favorites later
+food_recalls_in_db = []
+for food_recall in food_recall_data['results']:
+    recall_number, product_description, code_info = (food_recall['recall_number'],
+                                                     food_recall['product_description'],
+                                                     food_recall['code_info'])
+    recalling_firm, recall_reason = (food_recall['recalling_firm'],
+                                     food_recall['recall_reason'])
+    recall_initiation_date = datetime.strptime(food_recall['recall_initiation_date'], '%Y%m%d')
+    status = food_recall['status']
+
+    title, overview, poster_path = (movie['title'],
+                                    movie['overview'],
+                                    movie['poster_path'])
+    release_date = datetime.strptime(movie['release_date'], '%Y-%m-%d')
+
+    db_food_recall = crud.create_food_recall((recall_number, 
+                                              product_description, 
+                                              code_info, 
+                                              recalling_firm, 
+                                              recall_reason, 
+                                              recall_initiation_date, 
+                                              status))
+    food_recalls_in_db.append(db_food_recall)
+
+for n in range(0, 10):
+    fname = f'user{n}'
+    lname = f'user{n}'
+    email = f'user{n}@test.com'  # Voila! A unique email!
+    password = 'test'
+    
+    user = crud.create_user(fname, lname, email, password)
+
+    for _ in range(0, 10):
+        random_favorite_food_recall = choice(food_recalls_in_db)
+        comment = 'comment'
+        drug = ''
+        score = randint(1, 5)
+
+        crud.create_favorite(user, random_favorite_food_recall, drug, comment)
