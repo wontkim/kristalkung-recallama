@@ -84,7 +84,7 @@ class Favorite(db.Model):
         return f'<Favorite user_id={self.user_id}, food_id={self.food_id}, drug_id={self.drug_id}, comment={self.comment}>'
 
 
-def connect_to_db(flask_app, db_uri='postgresql:///foods', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///recalls', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
