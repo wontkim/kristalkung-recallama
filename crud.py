@@ -11,14 +11,14 @@ def create_user(fname, lname, email, password):
 
     return user
 
-def create_food_recall(recall_number, product_description, code_info, recalling_firm, recall_reason, recall_initiation_date, status):
+def create_food_recall(recall_number, product_description, code_info, recalling_firm, reason_for_recall, recall_initiation_date, status):
     """Create and returns a new food recall."""
 
     food_recall = Food(recall_number=recall_number, 
                        product_description=product_description, 
                        code_info=code_info, 
                        recalling_firm=recalling_firm, 
-                       recall_reason=recall_reason, 
+                       reason_for_recall=reason_for_recall, 
                        recall_initiation_date=recall_initiation_date, 
                        status=status)
     db.session.add(food_recall)
@@ -26,7 +26,7 @@ def create_food_recall(recall_number, product_description, code_info, recalling_
 
     return food_recall
 
-def create_favorite(user, food, drug, comment):
+def create_favorite(comment, user, food, drug):
     """Create and return a new favorite."""
 
     favorite = Favorite(user=user, food=food, drug=drug, comment=comment)

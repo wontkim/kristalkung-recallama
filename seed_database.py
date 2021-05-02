@@ -27,23 +27,19 @@ for food_recall in food_recall_data['results']:
     recall_number, product_description, code_info = (food_recall['recall_number'],
                                                      food_recall['product_description'],
                                                      food_recall['code_info'])
-    recalling_firm, recall_reason = (food_recall['recalling_firm'],
-                                     food_recall['recall_reason'])
+    recalling_firm, reason_for_recall = (food_recall['recalling_firm'],
+                                     food_recall['reason_for_recall'])
     recall_initiation_date = datetime.strptime(food_recall['recall_initiation_date'], '%Y%m%d')
     status = food_recall['status']
 
-    title, overview, poster_path = (movie['title'],
-                                    movie['overview'],
-                                    movie['poster_path'])
-    release_date = datetime.strptime(movie['release_date'], '%Y-%m-%d')
-
-    db_food_recall = crud.create_food_recall((recall_number, 
+    db_food_recall = crud.create_food_recall(recall_number, 
                                               product_description, 
                                               code_info, 
                                               recalling_firm, 
-                                              recall_reason, 
+                                              reason_for_recall, 
                                               recall_initiation_date, 
-                                              status))
+                                              status)
+
     food_recalls_in_db.append(db_food_recall)
 
 for n in range(0, 10):
@@ -60,4 +56,4 @@ for n in range(0, 10):
         drug = ''
         score = randint(1, 5)
 
-        crud.create_favorite(user, random_favorite_food_recall, drug, comment)
+        crud.create_favorite(comment, user, random_favorite_food_recall, drug)

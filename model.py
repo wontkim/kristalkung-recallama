@@ -33,7 +33,7 @@ class Food(db.Model):
     product_description = db.Column(db.String, nullable=False)
     code_info = db.Column(db.String, nullable=False)
     recalling_firm = db.Column(db.String, nullable=False) 
-    recall_reason = db.Column(db.String, nullable=False)
+    reason_for_recall = db.Column(db.String, nullable=False)
     recall_initiation_date = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.String, nullable=False)
 
