@@ -4,9 +4,9 @@ function Homepage() {
         {/* copied out the image link for now: */}
         {/* <img src="/static/img/balloonicorn.jpg" /> */}
   
-        <h2>Welcome to RECALLAMA</h2>
+        <h2>Welcome to Recallama</h2>
   
-        <a href="/sign-up">
+        <a href="/signup">
           Sign Up
         </a>
         <br/>
