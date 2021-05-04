@@ -44,6 +44,19 @@ def search():
 @app.route('/search/results')
 def search_results():
     """View results from the search."""
+
+    url = 'https://api.fda.gov/food/enforcement.json'
+    search = '?search='
+    field = 'distribution_pattern:"nationwide"'
+    limit = '&limit=1'
+
+    complete_url = url + search + field + limit
+
+    data = requests.get(complete_url).json()
+
+    for result in data.get('results', []):
+        print(result)
+
     return render_template('results.html')
 
 
