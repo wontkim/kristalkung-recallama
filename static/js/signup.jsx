@@ -5,7 +5,7 @@ function SignUp() {
         Sign up for a Recallama account
       </h2>
 
-      <form>
+      <form id="signup" action='/users' method='POST'>
       <label>
         First Name: 
         <input type="text" fname="fname" />

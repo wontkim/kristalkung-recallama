@@ -11,6 +11,11 @@ def create_user(fname, lname, email, password):
 
     return user
 
+def get_user_by_email(email):
+    """Return a user by email."""
+
+    return User.query.filter(User.email == email).first()
+
 def create_food_recall(recall_number, product_description, code_info, recalling_firm, reason_for_recall, recall_initiation_date, status):
     """Create and returns a new food recall."""
 

@@ -1,8 +1,6 @@
 function Homepage() {
     return (
       <React.Fragment>
-        {/* copied out the image link for now: */}
-        {/* <img src="/static/img/balloonicorn.jpg" /> */}
   
         <h2>Welcome to Recallama</h2>
   
@@ -15,6 +13,9 @@ function Homepage() {
         </a>
         <br/>
         
+        <img src="/static/img/recallama.jpg" />
+
+
       </React.Fragment>
     );
   }
