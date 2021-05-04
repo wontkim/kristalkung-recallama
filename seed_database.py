@@ -43,7 +43,7 @@ for food_recall in food_recall_data['results']:
     food_recalls_in_db.append(db_food_recall)
 
 for n in range(0, 10):
-    fname = f'user{n}'
+    fname = f'user{n}' 
     lname = f'user{n}'
     email = f'user{n}@test.com'  # Voila! A unique email!
     password = 'test'

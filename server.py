@@ -36,6 +36,16 @@ def signup():
 
     return render_template('signup.html')
 
+@app.route('/search')
+def search():
+    """View the search page."""
+    return render_template('search.html')
+
+@app.route('/search/results')
+def search_results():
+    """View results from the search."""
+    return render_template('results.html')
+
 
 if __name__ == '__main__':
     connect_to_db(app)
