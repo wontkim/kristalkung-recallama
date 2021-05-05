@@ -1,7 +1,6 @@
 """Server for Recallama app."""
 
-from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+from flask import (Flask, render_template, request, flash, session, redirect)
 from model import connect_to_db
 import crud
 import model
@@ -31,9 +30,28 @@ def login():
     return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
+def user_login():
+    """Login user"""
+
+    input_email = request.form.get('email')
+    input_password = request.form.get('password')
+
+    user = get_user_by_email(input_email)
+
+    if user and user.password == input_password:
+        session['user'] = user.user_id
+        alert('Logged in.')
+        return redirect('/')
+    else:
+        alert('incorrect login')
+        return redirect('/')
+
+@app.route('/users', methods=['POST'])
 def register_user():
     """Create a new user."""
 
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
     email = request.form.get('email')
     password = request.form.get('password')
 
@@ -41,7 +59,7 @@ def register_user():
     if user:
         flash('Cannot create an account with that email. Try again.')
     else:
-        crud.create_user(email, password)
+        crud.create_user(fname, lname, email, password)
         flash('Account created! Please log in.')
 
     return redirect('/')
