@@ -4,12 +4,12 @@ from model import db, User, Food, Drug, Favorite, connect_to_db
 def create_user(fname, lname, email, password):
     """Create and return a new user."""
 
-    user = User(fname=fname, lname=lname, email=email, password=password)
+    new_user = User(fname=fname, lname=lname, email=email, password=password)
 
-    db.session.add(user)
+    db.session.add(new_user)
     db.session.commit()
 
-    return user
+    return new_user
 
 def get_user_by_email(email):
     """Return a user by email."""
@@ -31,10 +31,10 @@ def create_food_recall(recall_number, product_description, code_info, recalling_
 
     return food_recall
 
-def create_favorite(comment, user, food, drug):
+def create_favorite_food_recall(comment, user, food):
     """Create and return a new favorite."""
-
-    favorite = Favorite(user=user, food=food, drug=drug, comment=comment)
+    
+    favorite = Favorite(comment=comment, user=user, food=food)
 
     db.session.add(favorite)
     db.session.commit()
