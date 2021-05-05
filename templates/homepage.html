@@ -1,12 +1,29 @@
 {% extends 'base.html' %}
 
-{% block title %} Welcome {% endblock %}
+{% block title %} Recallama {% endblock %}
 
 {% block body %}
+
+  <h1> Welcome to Recallama! </h1>
+
+  <button id='loginButton'>Login</button>
+  <button id='signupButton'>Signup</button>
+
+  <script>
+    "use strict";
+
+    const loginButton = document.querySelector('#loginButton');
+    const signupButton = document.querySelector('#signupButton');
+
+    loginButton.addEventListener('click', () => { window.location.href='/login'})
+    signupButton.addEventListener('click', () => { window.location.href='/signup'})
+
+  </script>
+
   <!-- Mount your react components on to this element. -->
-  <div id="app"></div>
+  <!-- <div id="app"></div> -->
 {% endblock %}
 
 {% block js %}
-	<script src="/static/js/homepage.jsx" type="text/jsx"></script>
+	<!-- <script src="/static/js/homepage.jsx" type="text/jsx"></script> -->
 {% endblock %}

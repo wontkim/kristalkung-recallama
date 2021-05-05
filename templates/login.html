@@ -3,11 +3,29 @@
 {% block title %} Recallama Login {% endblock %}
 
 {% block body %}
-  <!-- Mount your react components on to this element. -->
+
+  <h1> Welcome back to Recallama! </h1>
+
+  <h2>Login to your account</h2>
+  <div id="login-form">
+    <form action='/login' methods="POST">
+      <p>
+        Email <input id='email' type='text' required=True> 
+      </p>
+      <p>
+        Password <input id='password' type='password' required=True> 
+      </p>
+      <input type='submit'>
+    </form>
+  </div>
+  </br> 
+  <a href='/signup'>Don't have an account? Click here to sign up</a>
+
+  <!-- Mount your react components on to this element. 
   <div id="welcome"></div>
-  <div id="app"></div>
+  <div id="app"></div> -->
 {% endblock %}
 
 {% block js %}
-	<script src="/static/js/login.jsx" type="text/jsx"></script>
+	<!-- <script src="/static/js/login.jsx" type="text/jsx"></script> -->
 {% endblock %}
