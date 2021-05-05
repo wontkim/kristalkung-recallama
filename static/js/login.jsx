@@ -1,32 +1,38 @@
-function Login() {
-  return(
-    <React.Fragment>
-      <h2>
-          Login to your Recallama account
-      </h2>
-      <form>
-        <label>
-          Email: 
-          <input type="text" email="email" />
-        </label>
-        <br />
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ""};
 
-        <label>
-          Password: 
-          <input type="text" password="password" />
-        </label>
-        <br />
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
+  handleChange(evt) {
+    this.setState({email: evt.target.email});
+    this.setState({password: evt.target.password});
+  }
+
+  handleSubmit(evt) {
+
+    alert('A name was submitted: ' + props.email + props.password);
+    evt.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label> Email: 
+          <input id="email" type="text" value= {this.state.email} onChange={this.handleChange} />
+        </label>
+        <label> Password: 
+          <input id="password" type="password" value= {this.state.password} onChange={this.handleChange} />
+        </label>
         <input type="submit" value="Login" />
       </form>
-      <br />
-      <br />
-      
-      <a href="/signup">
-        Don't have an account? Click here to create one.
-      </a>
-    </React.Fragment>
-  )
+
+    )
+  }
 }
 
-ReactDOM.render(<Login />, document.getElementById('app'));
+ReactDOM.render( <LoginForm />, document.getElementById("app"));
+

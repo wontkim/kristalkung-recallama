@@ -8,25 +8,25 @@ function SignUp() {
       <form id="signup" action='/users' method='POST'>
       <label>
         First Name: 
-        <input type="text" fname="fname" />
+        <input type="text" fname="fname" placeholder="first name" />
       </label>
       <br />
 
       <label>
         Last Name: 
-        <input type="text" lname="lname" />
+        <input type="text" lname="lname" placeholder="last name" />
       </label>
       <br />
 
       <label>
         Email: 
-        <input type="text" email="email" />
+        <input type="text" email="email" placeholder="email"/>
       </label>
       <br />
 
       <label>
         Password: 
-        <input type="text" password="password" />
+        <input type="password" password="password" placeholder="password"/>
       </label>
       <br />
 
