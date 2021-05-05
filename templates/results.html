@@ -3,10 +3,19 @@
 {% block title %} Welcome {% endblock %}
 
 {% block body %}
-  <!-- Mount your react components on to this element. -->
-  <div id="app"></div>
+
+  <h2> Search results </h2>
+  <h3> Recallama found these recalls for you: </h3>
+
+  <p> 
+ 
+  {{ result }}
+  </p>
+
+  <!-- Mount your react components on to this element. 
+  <div id="app"></div> -->
 {% endblock %}
 
 {% block js %}
-	<script src="/static/js/results.jsx" type="text/jsx"></script>
+	<!-- <script src="/static/js/results.jsx" type="text/jsx"></script> -->
 {% endblock %}

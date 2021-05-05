@@ -63,8 +63,8 @@ def search_results():
 
     url = 'https://api.fda.gov/food/enforcement.json'
     search = '?search='
-    field = 'distribution_pattern:"nationwide"'
-    limit = '&limit=1'
+    field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
+    limit = '&limit=5'
 
     complete_url = url + search + field + limit
 
@@ -73,7 +73,7 @@ def search_results():
     for result in data.get('results', []):
         print(result)
 
-    return render_template('results.html')
+    return render_template('results.html', result=result)
 
 
 if __name__ == '__main__':

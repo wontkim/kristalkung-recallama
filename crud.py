@@ -11,6 +11,22 @@ def create_user(fname, lname, email, password):
 
     return new_user
 
+def get_users():
+    """Return all users."""
+
+    return User.query.all()
+
+def get_user_by_id(user_id):
+    """Returns user with ID."""
+
+    return User.query.get(user_id)
+
+
+def get_user_by_email(email):
+    """Returns a user with email."""
+
+    return User.query.filter(User.email == email).first()
+
 def get_user_by_email(email):
     """Return a user by email."""
 
@@ -30,6 +46,17 @@ def create_food_recall(recall_number, product_description, code_info, recalling_
     db.session.commit()
 
     return food_recall
+
+def get_food_recall():
+    """Return all food recalls."""
+
+    return Food.query.all()
+
+
+def get_food_recall_by_id(food_id):
+    """Returns food recall with ID."""
+
+    return Food.query.get(food_id)
 
 def create_favorite_food_recall(comment, user, food):
     """Create and return a new favorite food recall."""
