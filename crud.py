@@ -32,9 +32,34 @@ def create_food_recall(recall_number, product_description, code_info, recalling_
     return food_recall
 
 def create_favorite_food_recall(comment, user, food):
-    """Create and return a new favorite."""
+    """Create and return a new favorite food recall."""
     
     favorite = Favorite(comment=comment, user=user, food=food)
+
+    db.session.add(favorite)
+    db.session.commit()
+
+    return favorite
+
+def create_drug_recall(recall_number, product_description, code_info, recalling_firm, reason_for_recall, recall_initiation_date, status):
+    """Create and returns a new drug recall."""
+
+    drug_recall = Drug(recall_number=recall_number, 
+                       product_description=product_description, 
+                       code_info=code_info, 
+                       recalling_firm=recalling_firm, 
+                       reason_for_recall=reason_for_recall, 
+                       recall_initiation_date=recall_initiation_date, 
+                       status=status)
+    db.session.add(drug_recall)
+    db.session.commit()
+
+    return drug_recall
+
+def create_favorite_drug_recall(comment, user, drug):
+    """Create and return a new favorite drug recall."""
+    
+    favorite = Favorite(comment=comment, user=user, drug=drug)
 
     db.session.add(favorite)
     db.session.commit()

@@ -20,7 +20,7 @@ model.db.create_all()
 with open('data/shorter.json') as food_recalls:
     food_recall_data = json.loads(food_recalls.read())
 
-# Create recalls, store them in list so we can use them
+# Create food recalls, store them in list so we can use them
 # to create fake favorites later
 food_recalls_in_db = []
 for food_recall in food_recall_data['results']:
