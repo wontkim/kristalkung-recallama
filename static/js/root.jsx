@@ -72,13 +72,21 @@ function SignUp() {
       <form onSubmit={handleLogin}>
         First name:
 				<input value={fname} onChange={handleEmailChange} type="text"></input>
+        <br/>
+
         Last name:
 				<input value={lname} onChange={handleEmailChange} type="text"></input>
+        <br/>
+
         Email:
 				<input value={email} onChange={handleEmailChange} type="text"></input>
-				Password:
+				<br/>
+        
+        Password:
 				<input value={password} onChange={handlePasswordChange} type="text"></input>
-				<button>Login</button>
+        <br/>
+
+				<button type="submit">Login</button>
 			</form>
     </div>
   )
@@ -88,6 +96,10 @@ function SearchBar() {
 	return (
 		<div>
 			<input type='text'></input>
+      {/* TODO: make this into fully controlled form */}
+      {/* TODO: put more searchable fields */}
+      <br/>
+      <button type="submit">Search</button>
 		</div>
 	)
 }
@@ -149,9 +161,13 @@ function LogIn() {
 			<form onSubmit={handleLogin}>
 				Email:
 				<input value={email} onChange={handleEmailChange} type="text"></input>
+        <br/>
+
 				Password:
 				<input value={password} onChange={handlePasswordChange} type="text"></input>
-				<button>Login</button>
+        <br/>
+
+				<button type="submit">Login</button>
 			</form>
 		</div>
 	)
