@@ -17,81 +17,92 @@ app.secret_key = "kksecretkey"
 app.jinja_env.undefined = StrictUndefined
 
 
-# app routes go here
+@app.route('/signup')
+@app.route('/login')
+@app.route('/search')
 @app.route('/')
 def homepage():
-    """View homepage."""
-    return render_template('homepage.html')
+    """view homepage"""
+    return render_template('root.html')
 
-@app.route('/login')
-def login():
-    """View login page."""
+
+
+
+# # app routes go here
+# @app.route('/')
+# def homepage():
+#     """View homepage."""
+#     return render_template('homepage.html')
+
+# @app.route('/login')
+# def login():
+#     """View login page."""
     
-    return render_template('login.html')
+#     return render_template('login.html')
 
-@app.route('/login', methods=['POST'])
-def user_login():
-    """Login user"""
+# @app.route('/login', methods=['POST'])
+# def user_login():
+#     """Login user"""
 
-    input_email = request.form.get('email')
-    input_password = request.form.get('password')
+#     input_email = request.form.get('email')
+#     input_password = request.form.get('password')
 
-    user = get_user_by_email(input_email)
+#     user = get_user_by_email(input_email)
 
-    if user and user.password == input_password:
-        session['user'] = user.user_id
-        alert('Logged in.')
-        return redirect('/')
-    else:
-        alert('incorrect login')
-        return redirect('/')
+#     if user and user.password == input_password:
+#         session['user'] = user.user_id
+#         alert('Logged in.')
+#         return redirect('/')
+#     else:
+#         alert('incorrect login')
+#         return redirect('/')
 
-@app.route('/users', methods=['POST'])
-def register_user():
-    """Create a new user."""
+# @app.route('/users', methods=['POST'])
+# def register_user():
+#     """Create a new user."""
 
-    fname = request.form.get('fname')
-    lname = request.form.get('lname')
-    email = request.form.get('email')
-    password = request.form.get('password')
+#     fname = request.form.get('fname')
+#     lname = request.form.get('lname')
+#     email = request.form.get('email')
+#     password = request.form.get('password')
 
-    user = crud.get_user_by_email(email)
-    if user:
-        flash('Cannot create an account with that email. Try again.')
-    else:
-        crud.create_user(fname, lname, email, password)
-        flash('Account created! Please log in.')
+#     user = crud.get_user_by_email(email)
+#     if user:
+#         flash('Cannot create an account with that email. Try again.')
+#     else:
+#         crud.create_user(fname, lname, email, password)
+#         flash('Account created! Please log in.')
 
-    return redirect('/')
+#     return redirect('/')
 
-@app.route('/signup')
-def signup():
-    """View sign up page."""
+# @app.route('/signup')
+# def signup():
+#     """View sign up page."""
 
-    return render_template('signup.html')
+#     return render_template('signup.html')
 
-@app.route('/search')
-def search():
-    """View the search page."""
-    return render_template('search.html')
+# @app.route('/search')
+# def search():
+#     """View the search page."""
+#     return render_template('search.html')
 
-@app.route('/search/results')
-def search_results():
-    """View results from the search."""
+# @app.route('/search/results')
+# def search_results():
+#     """View results from the search."""
 
-    url = 'https://api.fda.gov/food/enforcement.json'
-    search = '?search='
-    field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
-    limit = '&limit=5'
+#     url = 'https://api.fda.gov/food/enforcement.json'
+#     search = '?search='
+#     field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
+#     limit = '&limit=5'
 
-    complete_url = url + search + field + limit
+#     complete_url = url + search + field + limit
 
-    data = requests.get(complete_url).json()
+#     data = requests.get(complete_url).json()
 
-    for result in data.get('results', []):
-        print(result)
+#     for result in data.get('results', []):
+#         print(result)
 
-    return render_template('results.html', result=result)
+#     return render_template('results.html', result=result)
 
 
 if __name__ == '__main__':
