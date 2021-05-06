@@ -25,7 +25,40 @@ def homepage():
     """view homepage"""
     return render_template('root.html')
 
+@app.route('/api/login', methods=["POST"])
+def login():
 
+    data = request.get_json()
+
+    email = data['email']
+    password = data['password']
+
+    valid_user = True
+    # write a function here that will validate the user
+
+    if valid_user:
+        return jsonify("login successful")
+    else:
+        return jsonify("login failed")
+
+
+@app.route('/api/signup', methods=["POST"])
+def login():
+
+    data = request.get_json()
+    
+    fname = data['fname']
+    lname = data['lname']
+    email = data['email']
+    password = data['password']
+
+    valid_user = True
+    # write a function here that will validate the user
+
+    if valid_user:
+        return jsonify("login successful")
+    else:
+        return jsonify("login failed")
 
 
 # # app routes go here
