@@ -43,10 +43,10 @@ def login():
 
 
 @app.route('/api/signup', methods=["POST"])
-def login():
+def signup():
 
     data = request.get_json()
-    
+
     fname = data['fname']
     lname = data['lname']
     email = data['email']
