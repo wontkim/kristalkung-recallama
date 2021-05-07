@@ -62,6 +62,8 @@ function LogIn() {
 
 				<button type="submit">Login</button>
 			</form>
+			< br />
+        <a href='/signup'>Don't have an account? Click here to sign up.</a>
 		</div>
 	)
 }

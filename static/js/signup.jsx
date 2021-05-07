@@ -2,12 +2,12 @@
 
 
 function SignUp() {
-  const [fname, setFname] = React.useState("");
-  const [lname, setLname] = React.useState("");
+  const [fname, setFName] = React.useState("");
+  const [lname, setLName] = React.useState("");
   const [email, setEmail] = React.useState("");
-	const [password, setPassword] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-	function handleLogin(evt) {
+	function handleSignUp(evt) {
 		evt.preventDefault();
 		
 		// make a data option and put your email and password in it
@@ -29,16 +29,20 @@ function SignUp() {
 		}
 		
 		fetch('/api/signup', options)
-		.then(response => response.json())
-		.then(data => {
-			if (data === 'login sucessful') {
-				alert(data)
-				// here you prob want to redirect back to homepage
-			} else {
-				alert('login failed, very sad')
-			}
-		})
+		.then(response => response.json())  //gets response from server and makes into json
+    .then(data => console.log(data))
+		
+    // TODO: figure out how to let the user know on the webpage the error of a taken email
+    // TODO: figure out a new user.
 	}
+
+  function handleFNameChange(evt) {
+    setFName(evt.target.value)
+  }
+
+  function handleLNameChange(evt) {
+    setLName(evt.target.value)
+  }
 
   function handleEmailChange(evt) {
 		setEmail(evt.target.value)
@@ -53,13 +57,13 @@ function SignUp() {
       <h2>
       Signup for a Recallama account 
       </h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSignUp}>
         First name:
-				<input value={fname} onChange={handleEmailChange} type="text"></input>
+				<input value={fname} onChange={handleFNameChange} type="text"></input>
         <br/>
 
         Last name:
-				<input value={lname} onChange={handleEmailChange} type="text"></input>
+				<input value={lname} onChange={handleLNameChange} type="text"></input>
         <br/>
 
         Email:
@@ -70,8 +74,10 @@ function SignUp() {
 				<input value={password} onChange={handlePasswordChange} type="text"></input>
         <br/>
 
-				<button type="submit">Login</button>
+				<button type="submit">Sign up</button>
 			</form>
+      <br/>
+      <a href='/login'>Already have an account? Click here to login.</a>
     </div>
   )
 }
@@ -142,12 +148,4 @@ function SignUp() {
 //     )
 //   }
 // }
-
-
-
-
-// ReactDOM.render(<Welcome />, document.getElementById("welcome"));
-
-
-// ReactDOM.render( <SignUpForm />, document.getElementById("app"));
 

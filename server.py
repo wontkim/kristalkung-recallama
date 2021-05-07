@@ -54,17 +54,35 @@ def signup():
 
     data = request.get_json()
 
-    fname = data['fname']
-    lname = data['lname']
-    email = data['email']
-    password = data['password']
+    print(data)
 
+    input_fname = data['fname']
+    input_lname = data['lname']
+    input_email = data['email']
+    input_password = data['password']
+
+    if input_email in crud.get_all_emails():
+        return '"user with that email already exists"'
+        # TODO: figure out how to get this to appear on the front end 
+        # and let the user know on the web page 
+        # that they cannot use this email
+    
     new_user = crud.create_user(fname, lname, email, password)
 
-    if valid_user:
-        return jsonify("login successful")
-    else:
-        return jsonify("login failed")
+    return jsonify("login successful")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

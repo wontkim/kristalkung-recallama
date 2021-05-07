@@ -21,6 +21,15 @@ def get_user_by_id(user_id):
 
     return User.query.get(user_id)
 
+def get_all_emails():
+    """Return all emails."""
+
+    email_list = []
+
+    for user in get_users():
+        email_list.append(user.email)
+
+    return email_list
 
 def get_user_by_email(email):
     """Returns a user with email."""
