@@ -1,24 +1,15 @@
+"use strict";
+
+
 function Homepage() {
-    return (
-      <React.Fragment>
-  
-        <h2>Welcome to Recallama</h2>
-  
-        <a href="/signup">
-          Sign Up
-        </a>
-        <br/>
-        <a href="/login">
-          Login
-        </a>
-        <br/>
-        
-        <img src="/static/img/recallama.jpg" />
+  return (
+    <div>
+      <h1>
+        Welcome to Recallama
+      </h1>
+    </div>
+  )
+}
 
 
-      </React.Fragment>
-    );
-  }
-  
-  ReactDOM.render(<Homepage />, document.getElementById('app'));
-  
+

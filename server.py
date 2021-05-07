@@ -1,6 +1,6 @@
 """Server for Recallama app."""
 
-from flask import (Flask, render_template, request, flash, session, redirect)
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db
 import crud
 import model
@@ -30,17 +30,24 @@ def login():
 
     data = request.get_json()
 
-    email = data['email']
-    password = data['password']
+    input_email = data['email']
+    input_password = data['password']
 
-    valid_user = True
-    # write a function here that will validate the user
+    user = crud.get_user_by_email(input_email)
 
-    if valid_user:
+    if user and user.password == input_password:
+        session['user'] = user.user_id
         return jsonify("login successful")
     else:
         return jsonify("login failed")
 
+    # if user and user.password == input_password:
+    #     session['user'] = user.user_id
+    #     flash('Logged in.')
+    #     return redirect('/')
+    # else:
+    #     flash('incorrect login')
+    #     return redirect('/login')
 
 @app.route('/api/signup', methods=["POST"])
 def signup():
@@ -52,13 +59,13 @@ def signup():
     email = data['email']
     password = data['password']
 
-    valid_user = True
-    # write a function here that will validate the user
+    new_user = crud.create_user(fname, lname, email, password)
 
     if valid_user:
         return jsonify("login successful")
     else:
         return jsonify("login failed")
+
 
 
 # # app routes go here
@@ -107,17 +114,6 @@ def signup():
 #         flash('Account created! Please log in.')
 
 #     return redirect('/')
-
-# @app.route('/signup')
-# def signup():
-#     """View sign up page."""
-
-#     return render_template('signup.html')
-
-# @app.route('/search')
-# def search():
-#     """View the search page."""
-#     return render_template('search.html')
 
 # @app.route('/search/results')
 # def search_results():
