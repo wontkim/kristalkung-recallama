@@ -28,18 +28,18 @@ def homepage():
 @app.route('/api/login', methods=["POST"])
 def login():
 
-    data = request.get_json()
-
-    input_email = data['email']
-    input_password = data['password']
+    input_email = request.form.get('email')
+    input_password = request.form.get('password')
 
     user = crud.get_user_by_email(input_email)
 
     if user and user.password == input_password:
         session['user'] = user.user_id
-        return jsonify("login successful")
+        session['user_name'] = f'{user.fname} {user.lname}'
+        return redirect('/search')
     else:
-        return jsonify("login failed")
+        flash('incorrect login')
+        return redirect('/login')
 
     # if user and user.password == input_password:
     #     session['user'] = user.user_id
@@ -71,22 +71,42 @@ def signup():
 
 
 @app.route('/api/search', methods=["POST"])
-def login():
+def search():
 
     data = request.get_json()
+    
+    print(data)
 
-    input_email = data['email']
-    input_password = data['password']
+    input_description = data['description']
+    input_status = data['status']
+    input_reason_for_recall = data['reasonForRecall']
+    input_recalling_firm = data['recallingFirm']
 
-    user = crud.get_user_by_email(input_email)
+    search_result = crud.get_food_recall_by_description(input_description)
 
-    if user and user.password == input_password:
-        session['user'] = user.user_id
-        return jsonify("login successful")
+    if input_description in search_result:
+        return jsonify("search successful")
     else:
-        return jsonify("login failed")
+        return jsonify("search failed")
 
 
+# @app.route('/search/results')
+# def search_results():
+#     """View results from the search."""
+
+#     url = 'https://api.fda.gov/food/enforcement.json'
+#     search = '?search='
+#     field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
+#     limit = '&limit=5'
+
+#     complete_url = url + search + field + limit
+
+#     data = requests.get(complete_url).json()
+
+#     for result in data.get('results', []):
+#         print(result)
+
+#     return render_template('results.html', result=result)
 
 
 

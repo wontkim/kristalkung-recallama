@@ -1,3 +1,5 @@
+"use strict";
+
 function SearchBar() {
 
   const [ description, setDescription ] = React.useState("")
@@ -45,9 +47,15 @@ function SearchBar() {
 		fetch('/api/search', options)
 		.then(response => response.json())
 		.then(data => {
-      console.log(data)
+      if (data === "search failed") {
+        console.log("failed")
+        alert("failed")
+
+      } else {
+        console.log("success")
+        alert("success")
 			// TODO: redirect to results page
-			})
+    }})
 
   }
 
@@ -79,9 +87,19 @@ function SearchBar() {
 	)
 }
 
+function WelcomeUser() {
+  if (window.user_id != "null") {
+    return <h2>Welcome {window.user_name}!</h2>
+  }
+}
+
 function Search() {
-    return <div> 
-      <h2>Search for recalls </h2>
-      <SearchBar/>
+    return (
+      <div> 
+        <WelcomeUser/>
+        <h3>Search for recalls </h3>
+        <SearchBar/>
       </div>
+
+    )  
 }

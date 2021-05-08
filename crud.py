@@ -63,9 +63,15 @@ def get_food_recall():
 
 
 def get_food_recall_by_id(food_id):
-    """Returns food recall with ID."""
+    """Returns food recall by ID."""
 
     return Food.query.get(food_id)
+
+def get_food_recall_by_description(product_description):
+    """Returns food recalls with given product description."""
+
+    return Food.query.get(product_description)
+
 
 def create_favorite_food_recall(comment, user, food):
     """Create and return a new favorite food recall."""

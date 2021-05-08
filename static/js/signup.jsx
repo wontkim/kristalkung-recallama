@@ -2,6 +2,9 @@
 
 
 function SignUp() {
+
+  let history = useHistory();
+
   const [fname, setFName] = React.useState("");
   const [lname, setLName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -34,10 +37,9 @@ function SignUp() {
       if (data === "email used") {
         alert("This email has already been used. Please use a different email.")
       } else {
-        setFName(data.fname)
-        setLName(data.lname)
-        setEmail(data.email)
-        setPassword(data.password)
+        console.log(data)
+        history.push("/login")
+        // redirects user to the login page
       }
       
     })

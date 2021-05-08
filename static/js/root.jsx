@@ -6,6 +6,7 @@ const Link = ReactRouterDOM.Link;
 const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
+const useHistory = ReactRouterDOM.useHistory;
 
 // const { Router, Route, Link, Prompt, Switch, Redirect } = ReactRouterDOM;
 
