@@ -79,8 +79,8 @@ def search():
 
     input_description = data['description']
     input_status = data['status']
-    input_reason_for_recall = data['reasonForRecall']
-    input_recalling_firm = data['recallingFirm']
+    input_reason_for_recall = data['reason-for-recall']
+    input_recalling_firm = data['recalling-firm']
 
     search_result = crud.get_food_recall_by_description(input_description)
 

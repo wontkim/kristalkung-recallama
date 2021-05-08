@@ -63,19 +63,19 @@ function SearchBar() {
 		<div>
       <form>
         Food Description
-        <input value={description} onChange={handleDescriptionChange} type='text'></input>
+        <input value={description} name="description" onChange={handleDescriptionChange} type='text'></input>
         <br/>
 
         Recall Termination Status
-        <input value={status} onChange={handleStatusChange} type='text'></input>
+        <input value={status} name="status" onChange={handleStatusChange} type='text'></input>
         <br/>
         
         Reason for Recall 
-        <input value={reasonForRecall} onChange={handleReasonForRecallChange} type='text'></input>
+        <input value={reasonForRecall} name="reason-for-recall" onChange={handleReasonForRecallChange} type='text'></input>
         <br/>
 
         Recalling Firm
-        <input value={recallingFirm} onChange={handleRecallingFirmChange} type='text'></input>
+        <input value={recallingFirm} name="recalling-firm" onChange={handleRecallingFirmChange} type='text'></input>
         <br/>
         
         {/* TODO: put more searchable fields */}
