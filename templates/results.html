@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'root.html' %}
 
 {% block title %} Welcome {% endblock %}
 
@@ -9,15 +9,12 @@
 
   <p> 
 
-  {% for result in data %}
-    {{ result }}
-  {% endfor %}
   <!-- TODO: THIS DOESN'T WORK!!!! MUST FIX LATER -->
  
   </p>
 
-  <!-- Mount your react components on to this element. 
-  <div id="app"></div> -->
+  <!-- Mount your react components on to this element. -->
+  <div id="app"></div>
 {% endblock %}
 
 {% block js %}

@@ -66,24 +66,37 @@ def signup():
 @app.route('/api/search', methods=["POST"])
 def search():
 
+    payload = {}
+
     input_description = request.form.get("description")
     input_status = request.form.get("status")
     input_reason_for_recall = request.form.get("reason-for-recall")
     input_recalling_firm = request.form.get("recalling-firm")
 
-    # search_result = crud.get_food_recall_by_description(input_description)
+    inputs = [input_description, input_status, input_reason_for_recall, input_recalling_firm]
 
+    for input in inputs:
+        if input != "":
+            payload[input] = input
+    
     url = 'https://api.fda.gov/food/enforcement.json'
-    search = '?search='
-    field = 'status="Terminated"'
-    # field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
-    limit = '&limit=5'
 
-    complete_url = url + search + field + limit
+    res = requests.get(url, payload)
+                        
+    print(res)
+    flash(res)
+    flash("woohoo!")
 
-    data = requests.get(complete_url).json()
+    # search = '?search='
+    # field = 'status="Terminated"'
+    # # field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
+    # limit = '&limit=5'
 
-    return render_template('results.html', data=data)
+    # complete_url = url + search + field + limit
+
+    # data = requests.get(complete_url).json()
+
+    return render_template('results.html')
     
 
 
