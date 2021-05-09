@@ -61,7 +61,7 @@ function SearchBar() {
 
 	return (
 		<div>
-      <form action='/api/search' method="POST">
+      <form action='/search' method="POST">
         Food Description
         <input value={description} name="description" onChange={handleDescriptionChange} type='text'></input>
         <br/>
@@ -96,6 +96,7 @@ function Search() {
         <WelcomeUser/>
         <h3>Search for recalls </h3>
         <SearchBar/>
+        <Results />
       </div>
 
     )  

@@ -4,8 +4,8 @@
   <script>
     window.user_id = {{ session.get("user", "null") }}; 
     window.user_name = "{{ session.get("user_name", "null")}}";
-    console.log(window.user_id);
-    console.log(window.user_name);
+    <!-- console.log(window.user_id); -->
+    <!-- console.log(window.user_name); -->
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" crossorigin></script>
   <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -18,14 +18,16 @@
   <script src="/static/js/components/homepage.jsx" type="text/jsx"></script>
   <script src="/static/js/components/signup.jsx" type="text/jsx"></script>
   <script src="/static/js/components/login.jsx" type="text/jsx"></script>
-  <script src="/static/js/components/search.jsx" type="text/jsx"></script>
   <script src="/static/js/components/results.jsx" type="text/jsx"></script>
+  <script src="/static/js/components/search.jsx" type="text/jsx">
+
+  </script>
   <script src="/static/js/root.jsx" type="text/jsx"></script>
   <!-- <link rel='stylesheet' href='/static/mystyle/css' -->
   
   
   <body>
-    <!-- <img src='/static/img/recallama.jpg' -->
+    <img src='/static/img/recallama.jpg'
     {% for msg in get_flashed_messages() %}
       <p class="flash-msg">
         {{ msg }}

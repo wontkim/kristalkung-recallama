@@ -4,19 +4,12 @@
 
 {% block body %}
 
-  <h2> Search results </h2>
-  <h3> Recallama found these recalls for you: </h3>
+  <p> </p>
 
-  <p> 
-
-  <!-- TODO: THIS DOESN'T WORK!!!! MUST FIX LATER -->
- 
-  </p>
-
-  <!-- Mount your react components on to this element. -->
   <div id="app"></div>
 {% endblock %}
 
 {% block js %}
-	<!-- <script src="/static/js/results.jsx" type="text/jsx"></script> -->
+  <script src="/static/js/components/results.jsx" type="text/jsx"></script>
+  <script type="text/javascript"> console.log({{ data }})</script>
 {% endblock %}

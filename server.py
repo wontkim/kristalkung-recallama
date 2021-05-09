@@ -63,40 +63,49 @@ def signup():
     return '"account made"'
 
 
-@app.route('/api/search', methods=["POST"])
+@app.route('/search', methods=["POST"])
 def search():
 
     payload = {}
 
-    input_description = request.form.get("description")
-    input_status = request.form.get("status")
-    input_reason_for_recall = request.form.get("reason-for-recall")
-    input_recalling_firm = request.form.get("recalling-firm")
+    product_description = request.form.get("description")
+    status = request.form.get("status")
+    reason_for_recall = request.form.get("reason-for-recall")
+    recalling_firm = request.form.get("recalling-firm")
 
-    inputs = [input_description, input_status, input_reason_for_recall, input_recalling_firm]
+
+    inputs = [product_description, status, reason_for_recall, recalling_firm]
 
     for input in inputs:
         if input != "":
-            payload[input] = input
+            payload[input] = f'{input}'
     
-    url = 'https://api.fda.gov/food/enforcement.json'
+    url = 'https://api.fda.gov/food/enforcement.json?search=status="Terminated"&limit=5'
 
-    res = requests.get(url, payload)
-                        
-    print(res)
-    flash(res)
-    flash("woohoo!")
+    data = requests.get(url).json()
+
+    # res = requests.get(url, payload)
+    # print(res.url)
+    # flash(res)
+
+    # search_results - res.json()
+    # field = 'status="Terminated"'
+    # limit = '&limit=5'
+    # complete_url = url + field + limit
+
+    # return jsonify(data)                 
+    return render_template('/results.html', data=jsonify(data))
 
     # search = '?search='
     # field = 'status="Terminated"'
-    # # field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
+    # field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
     # limit = '&limit=5'
 
     # complete_url = url + search + field + limit
 
     # data = requests.get(complete_url).json()
 
-    return render_template('results.html')
+    # return render_template('results.html')
     
 
 
