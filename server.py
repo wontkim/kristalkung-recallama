@@ -41,13 +41,6 @@ def login():
         flash('incorrect login')
         return redirect('/login')
 
-    # if user and user.password == input_password:
-    #     session['user'] = user.user_id
-    #     flash('Logged in.')
-    #     return redirect('/')
-    # else:
-    #     flash('incorrect login')
-    #     return redirect('/login')
 
 @app.route('/api/signup', methods=["POST"])
 def signup():
@@ -73,115 +66,25 @@ def signup():
 @app.route('/api/search', methods=["POST"])
 def search():
 
-    data = request.get_json()
+    input_description = request.form.get("description")
+    input_status = request.form.get("status")
+    input_reason_for_recall = request.form.get("reason-for-recall")
+    input_recalling_firm = request.form.get("recalling-firm")
+
+    # search_result = crud.get_food_recall_by_description(input_description)
+
+    url = 'https://api.fda.gov/food/enforcement.json'
+    search = '?search='
+    field = 'status="Terminated"'
+    # field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
+    limit = '&limit=5'
+
+    complete_url = url + search + field + limit
+
+    data = requests.get(complete_url).json()
+
+    return render_template('results.html', data=data)
     
-    print(data)
-
-    input_description = data['description']
-    input_status = data['status']
-    input_reason_for_recall = data['reason-for-recall']
-    input_recalling_firm = data['recalling-firm']
-
-    search_result = crud.get_food_recall_by_description(input_description)
-
-    if input_description in search_result:
-        return jsonify("search successful")
-    else:
-        return jsonify("search failed")
-
-
-# @app.route('/search/results')
-# def search_results():
-#     """View results from the search."""
-
-#     url = 'https://api.fda.gov/food/enforcement.json'
-#     search = '?search='
-#     field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
-#     limit = '&limit=5'
-
-#     complete_url = url + search + field + limit
-
-#     data = requests.get(complete_url).json()
-
-#     for result in data.get('results', []):
-#         print(result)
-
-#     return render_template('results.html', result=result)
-
-
-
-
-
-
-
-
-
-
-
-# # app routes go here
-# @app.route('/')
-# def homepage():
-#     """View homepage."""
-#     return render_template('homepage.html')
-
-# @app.route('/login')
-# def login():
-#     """View login page."""
-    
-#     return render_template('login.html')
-
-# @app.route('/login', methods=['POST'])
-# def user_login():
-#     """Login user"""
-
-#     input_email = request.form.get('email')
-#     input_password = request.form.get('password')
-
-#     user = get_user_by_email(input_email)
-
-#     if user and user.password == input_password:
-#         session['user'] = user.user_id
-#         alert('Logged in.')
-#         return redirect('/')
-#     else:
-#         alert('incorrect login')
-#         return redirect('/')
-
-# @app.route('/users', methods=['POST'])
-# def register_user():
-#     """Create a new user."""
-
-#     fname = request.form.get('fname')
-#     lname = request.form.get('lname')
-#     email = request.form.get('email')
-#     password = request.form.get('password')
-
-#     user = crud.get_user_by_email(email)
-#     if user:
-#         flash('Cannot create an account with that email. Try again.')
-#     else:
-#         crud.create_user(fname, lname, email, password)
-#         flash('Account created! Please log in.')
-
-#     return redirect('/')
-
-# @app.route('/search/results')
-# def search_results():
-#     """View results from the search."""
-
-#     url = 'https://api.fda.gov/food/enforcement.json'
-#     search = '?search='
-#     field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
-#     limit = '&limit=5'
-
-#     complete_url = url + search + field + limit
-
-#     data = requests.get(complete_url).json()
-
-#     for result in data.get('results', []):
-#         print(result)
-
-#     return render_template('results.html', result=result)
 
 
 if __name__ == '__main__':

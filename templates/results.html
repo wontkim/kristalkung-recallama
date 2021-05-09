@@ -8,8 +8,12 @@
   <h3> Recallama found these recalls for you: </h3>
 
   <p> 
+
+  {% for result in data %}
+    {{ result }}
+  {% endfor %}
+  <!-- TODO: THIS DOESN'T WORK!!!! MUST FIX LATER -->
  
-  {{ result }}
   </p>
 
   <!-- Mount your react components on to this element. 

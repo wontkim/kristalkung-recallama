@@ -23,45 +23,45 @@ function SearchBar() {
     setRecallingFirm(evt.target.value)
   }
 
-  function SearchResults(evt) {
-    evt.preventDefault()
+  // function SearchResults(evt) {
+  //   evt.preventDefault()
 
-    // make a data option and put your search inputs in it
-		const data = {
-			description: description,
-      status: status,
-      reasonForRecall: reasonForRecall,
-      recallingFirm: recallingFirm,
-		}
+  //   // make a data option and put your search inputs in it
+	// 	const data = {
+	// 		description: description,
+  //     status: status,
+  //     reasonForRecall: reasonForRecall,
+  //     recallingFirm: recallingFirm,
+	// 	}
 
-		const options = {
-			'method': 'POST',
-			headers: {
-				'Content-Type': 'application/json' 
-				// tells the server during the post that this is a json string
-			},
-			// turn data into JSON
-			body: JSON.stringify(data)
-		}
+	// 	const options = {
+	// 		'method': 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json' 
+	// 			// tells the server during the post that this is a json string
+	// 		},
+	// 		// turn data into JSON
+	// 		body: JSON.stringify(data)
+	// 	}
 		
-		fetch('/api/search', options)
-		.then(response => response.json())
-		.then(data => {
-      if (data === "search failed") {
-        console.log("failed")
-        alert("failed")
+	// 	fetch('/api/search', options)
+	// 	.then(response => response.json())
+	// 	.then(data => {
+  //     if (data === "search failed") {
+  //       console.log("failed")
+  //       alert("failed")
 
-      } else {
-        console.log("success")
-        alert("success")
-			// TODO: redirect to results page
-    }})
+  //     } else {
+  //       console.log("success")
+  //       alert("success")
+	// 		// TODO: redirect to results page
+  //   }})
 
-  }
+  // }
 
 	return (
 		<div>
-      <form>
+      <form action='/api/search' method="POST">
         Food Description
         <input value={description} name="description" onChange={handleDescriptionChange} type='text'></input>
         <br/>
@@ -76,9 +76,6 @@ function SearchBar() {
 
         Recalling Firm
         <input value={recallingFirm} name="recalling-firm" onChange={handleRecallingFirmChange} type='text'></input>
-        <br/>
-        
-        {/* TODO: put more searchable fields */}
         <br/>
         <button type="submit">Search</button>
       </form>
