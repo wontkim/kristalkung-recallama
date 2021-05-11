@@ -1,15 +1,16 @@
 {% extends 'root.html' %}
 
-{% block title %} Welcome {% endblock %}
+{% block title %} {% endblock %}
 
 {% block body %}
-
-  <p> </p>
+  <script src="/static/js/components/results.jsx" type="text/jsx"></script>
 
   <div id="app"></div>
+  <div>results page</div>
+
 {% endblock %}
 
 {% block js %}
-  <script src="/static/js/components/results.jsx" type="text/jsx"></script>
-  <script type="text/javascript"> console.log({{ data }})</script>
+  <div> results page </div>
+
 {% endblock %}

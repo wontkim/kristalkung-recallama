@@ -48,9 +48,9 @@ function App() {
 					<Route path='/search'>
 						<Search />
 					</Route>
-					{/* <Route path='/api/results'>
+					<Route path='/results'>
 						<Results />
-					</Route> */}
+					</Route>
 					<Route path='/'>
 						<Homepage />
 					</Route>

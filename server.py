@@ -13,10 +13,12 @@ import requests
 
 
 app = Flask(__name__)
-app.secret_key = "kksecretkey"
+app.secret_key = "M3XIXXKzRa3hlxp404ldCUSeCxn3a7Ubfl17TRro"
 app.jinja_env.undefined = StrictUndefined
 
+API_KEY = os.environ['OPENFDA_KEY']
 
+@app.route('/results')
 @app.route('/signup')
 @app.route('/login')
 @app.route('/search')
@@ -54,59 +56,60 @@ def signup():
 
     if input_email in crud.get_all_emails():
         return '"email used"'
-        # TODO: figure out how to get this to appear on the front end 
-        # and let the user know on the web page 
-        # that they cannot use this email
     
     new_user = crud.create_user(input_fname, input_lname, input_email, input_password)
 
     return '"account made"'
 
 
-@app.route('/search', methods=["POST"])
+@app.route('/results', methods=["POST"])
 def search():
-
-    payload = {}
 
     product_description = request.form.get("description")
     status = request.form.get("status")
     reason_for_recall = request.form.get("reason-for-recall")
     recalling_firm = request.form.get("recalling-firm")
-
-
-    inputs = [product_description, status, reason_for_recall, recalling_firm]
-
-    for input in inputs:
-        if input != "":
-            payload[input] = f'{input}'
     
     url = 'https://api.fda.gov/food/enforcement.json?search=status="Terminated"&limit=5'
 
+    # url = 'https://api.fda.gov/food/enforcement.json'
+
     data = requests.get(url).json()
 
-    # res = requests.get(url, payload)
-    # print(res.url)
-    # flash(res)
+    return data
+
+    # return jsonify(data)
+    ## returns a list of recall objects from the api call
+    ## return jsonify(recall_list)
+
+    # res = requests.get(url, params=payload)
+    # data = res.json()
+    # return render_template('root.html', data=data)
+
+    # data_list = data["results"]
+    # recall_list = []
+    # for result in data_list:
+    #     recall_list.append({"recall_number": result["recall_number"], 
+    #                         "product_description": result["product_description"], 
+    #                         "code_info": result["code_info"], 
+    #                         "recalling_firm": result["recalling_firm"], 
+    #                         "reason_for_recall": result["reason_for_recall"], 
+    #                         "recall_initiation_date": result["recall_initiation_date"], 
+    #                         "status": result["status"]
+    #     })
+    # return render_template('/root.html', recall_list={"recalls": recall_list})
+    
 
     # search_results - res.json()
     # field = 'status="Terminated"'
     # limit = '&limit=5'
     # complete_url = url + field + limit
 
-    # return jsonify(data)                 
-    return render_template('/results.html', data=jsonify(data))
+    # return render_template('/root.html', data=jsonify(data))
+    ## shows regular page but
+    ## Error: Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0
+    ## problem is at the second .then for results.jsx
 
-    # search = '?search='
-    # field = 'status="Terminated"'
-    # field = 'recalling_firm:"Garden-Fresh Foods, Inc."'
-    # limit = '&limit=5'
-
-    # complete_url = url + search + field + limit
-
-    # data = requests.get(complete_url).json()
-
-    # return render_template('results.html')
-    
 
 
 if __name__ == '__main__':
