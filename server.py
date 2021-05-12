@@ -18,6 +18,7 @@ app.jinja_env.undefined = StrictUndefined
 
 API_KEY = os.environ['OPENFDA_KEY']
 
+@app.route('/profile')
 @app.route('/results')
 @app.route('/signup')
 @app.route('/login')
@@ -62,54 +63,49 @@ def signup():
     return '"account made"'
 
 
-@app.route('/results', methods=["POST"])
+@app.route('/api/results', methods=["POST"])
 def search():
-
+    payload = {
+        'api_key': API_KEY,
+        'limit': 5
+    }
     product_description = request.form.get("description")
     status = request.form.get("status")
     reason_for_recall = request.form.get("reason-for-recall")
     recalling_firm = request.form.get("recalling-firm")
+
+    search_terms = []
+
+    if product_description:
+        search_terms.append(f'product_description:"{product_description}"')
+    if status:
+        search_terms.append(f'status:"{status}"')
+    if reason_for_recall:
+        search_terms.append(f'reason_for_recall:"{reason_for_recall}"')
+    if recalling_firm:
+        search_terms.append(f'recalling_firm:"{recalling_firm}"')
     
-    url = 'https://api.fda.gov/food/enforcement.json?search=status="Terminated"&limit=5'
+    if search_terms:
+        payload['search'] = '+AND+'.join(search_terms)
 
-    # url = 'https://api.fda.gov/food/enforcement.json'
+    print(payload)
 
-    data = requests.get(url).json()
+    # url = 'https://api.fda.gov/food/enforcement.json?search=status=Terminated&limit=5'
+    # url = 'https://api.fda.gov/food/enforcement.json?search=status:"Terminated"+AND+recalling_firm:"Harry"&limit=5'
 
-    return data
-
-    # return jsonify(data)
-    ## returns a list of recall objects from the api call
-    ## return jsonify(recall_list)
-
-    # res = requests.get(url, params=payload)
-    # data = res.json()
-    # return render_template('root.html', data=data)
-
-    # data_list = data["results"]
-    # recall_list = []
-    # for result in data_list:
-    #     recall_list.append({"recall_number": result["recall_number"], 
-    #                         "product_description": result["product_description"], 
-    #                         "code_info": result["code_info"], 
-    #                         "recalling_firm": result["recalling_firm"], 
-    #                         "reason_for_recall": result["reason_for_recall"], 
-    #                         "recall_initiation_date": result["recall_initiation_date"], 
-    #                         "status": result["status"]
-    #     })
-    # return render_template('/root.html', recall_list={"recalls": recall_list})
+    url = 'https://api.fda.gov/food/enforcement.json'
     
+    # CURRENT STATE: can query just 1 field
+    # TODO: make it work with >1 fields entered in.
 
-    # search_results - res.json()
-    # field = 'status="Terminated"'
-    # limit = '&limit=5'
-    # complete_url = url + field + limit
+    data = requests.get(url, params=payload).json()
 
-    # return render_template('/root.html', data=jsonify(data))
-    ## shows regular page but
-    ## Error: Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0
-    ## problem is at the second .then for results.jsx
+    if data.get('error'):
+        return data
 
+    data_list = data['results']
+
+    return jsonify(data_list)
 
 
 if __name__ == '__main__':

@@ -5,6 +5,16 @@ function WelcomeUser() {
   else  return <h2> Welcome!</h2>
 }
 
+function PostResultItem(props) {
+  return <li>{props.recallingFirm}</li>
+}
+
+function HandleSubmit(e) {
+  e.preventDefault();
+
+}
+
+
 function SearchBar() {
 
   const [ description, setDescription ] = React.useState("")
@@ -14,49 +24,47 @@ function SearchBar() {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    const data = {'status': status};
-    console.log(data);
-    fetch('/results', {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(res => console.log(res))
 
-    
-  }
+    // React.useEffect(() => {
+    //   fetch('/api/results')
+    //   .then(response => response.json())
+      // .then(data => {
+        // const postResults = []
+        // for (const post of data) {
+        //   postResults.push(<PostResultItem title={post.recallingFirm} />);
+        // }
+        // setResultsList(postResults)
+      // })
+    // }, [])
 
-  function handleDescriptionChange(evt) {
-    setDescription(evt.target.value)
-  }
-  function handleStatusChange(evt) {
-    setStatus(evt.target.value)
-  }
-  function handleReasonForRecallChange(evt) {
-    setReasonForRecall(evt.target.value)
-  }
-  function handleRecallingFirmChange(evt) {
-    setRecallingFirm(evt.target.value)
+    return (
+      <div>
+        <Search />
+        <ul>
+          {resultsList}
+        </ul>
+      </div>
+    )
   }
 
 
 	return (
 		<div>
-      <form action='/results' onSubmit={handleSubmit} method="POST">
+      <form action='/api/results' onSubmit={handleSubmit} method="POST">
         Food Description
-        <input value={description} name="description" onChange={handleDescriptionChange} type='text'></input>
+        <input value={description} name="description" onChange={(e) => setDescription(e.target.value)} type='text'></input>
         <br/>
 
         Recall Termination Status
-        <input value={status} name="status" onChange={handleStatusChange} type='text'></input>
+        <input value={status} name="status" onChange={(e) => setStatus(e.target.value)} type='text'></input>
         <br/>
         
         Reason for Recall 
-        <input value={reasonForRecall} name="reason-for-recall" onChange={handleReasonForRecallChange} type='text'></input>
+        <input value={reasonForRecall} name="reason-for-recall" onChange={(e) => setReasonForRecall(e.target.value)} type='text'></input>
         <br/>
 
         Recalling Firm
-        <input value={recallingFirm} name="recalling-firm" onChange={handleRecallingFirmChange} type='text'></input>
+        <input value={recallingFirm} name="recalling-firm" onChange={(e) => setRecallingFirm(e.target.value)} type='text'></input>
         <br/>
         <button type="submit">Search</button>
       </form>
@@ -65,7 +73,33 @@ function SearchBar() {
 	)
 }
 
+// function PostResults(props) {
+//   // const [resultsList, setResultsList] = React.useState(["loading..."])
+//   const resultsList = <PostResultItem recallingFirm="test" />
 
+//   React.useEffect(() => {
+//     fetch('/api/results')
+//     .then(response => response.json())
+//     .then(data => {
+//       const postResults = []
+//       for (const post of data) {
+//         postResults.push(<PostResultItem title={post.recallingFirm} />);
+//       }
+//       setResultsList(postResults)
+//     })
+//   }, [])
+
+//   return (
+//     <div>
+//       <Search />
+//       <ul>
+//         {resultsList}
+//       </ul>
+//     </div>
+//   )
+
+
+// }
 
 function Search() {
     return (

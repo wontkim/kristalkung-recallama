@@ -9,11 +9,9 @@ function Results() {
 
   const [ data, setData ] = React.useState("");
 
-  React.useEffect(() => {
-    fetch("/results").then(res => res.json()).then(data => {
-      setData(data.result);
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   fetch
+  // })
 
   // fetch('/results', {
   //   method: "POST", 
@@ -45,8 +43,7 @@ function Results() {
         <SearchBar/>
         <h2>Search Results:</h2>
         <div> 
-          {/* <DisplayResults /> */}
-          {data}
+
         </div>
      </div>
   )
