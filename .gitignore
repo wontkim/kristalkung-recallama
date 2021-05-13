@@ -3,3 +3,4 @@ __pycache__
 secrets.sh
 .DS_Store
 data/shorter.json
+node_modules

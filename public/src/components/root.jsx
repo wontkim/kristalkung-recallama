@@ -1,0 +1,378 @@
+// for React
+/*
+const Router = ReactRouterDOM.BrowserRouter;
+const Route = ReactRouterDOM.Route;
+const Link = ReactRouterDOM.Link;
+const Prompt = ReactRouterDOM.Prompt;
+const Switch = ReactRouterDOM.Switch;
+const Redirect = ReactRouterDOM.Redirect;
+const useHistory = ReactRouterDOM.useHistory;
+*/
+// const { Router, Route, Link, Prompt, Switch, Redirect } = ReactRouterDOM;
+
+import { BrowserRouter as Router, Route, Link, Prompt, Switch, Redirect, useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+
+function WelcomeUser() {
+  if (window.user_id) return <h2>Welcome {window.user_name}!</h2>
+  else  return <h2> Welcome!</h2>
+}
+
+function Homepage() {
+	return (
+	  <div>
+		<h1>
+		  Welcome to Recallama
+		</h1>
+	  </div>
+	)
+}
+
+function LogIn() {
+
+	const [email, setEmail] = React.useState("");
+	const [password, setPassword] = React.useState("");
+
+	function handleEmailChange(evt) {
+		setEmail(evt.target.value)
+	}
+
+	function handlePasswordChange(evt) {
+		setPassword(evt.target.value)
+	}
+	return (
+		<div>
+      <h2>Login to your Recallama Account</h2>
+			<form action="/api/login" method="POST">
+				Email:
+				<input value={email} name="email" onChange={handleEmailChange} type="text"></input>
+        <br/>
+
+				Password:
+				<input value={password} name="password" onChange={handlePasswordChange} type="text"></input>
+        <br/>
+
+				<button type="submit">Login</button>
+			</form>
+			< br />
+        <a href='/signup'>Don't have an account? Click here to sign up.</a>
+		</div>
+	)
+}
+
+
+//Kristals SignUp component
+
+function SignUp() {
+
+  let history = useHistory();
+
+  const [fname, setFName] = React.useState("");
+  const [lname, setLName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+	function handleSignUp(evt) {
+		evt.preventDefault();
+		
+		// make a data option and put your email and password in it
+		const data = {
+      fname: fname,
+      lname: lname,
+			email: email,
+			password: password
+		}
+
+		const options = {
+			"method": "POST",
+			headers: {
+				"Content-Type": "application/json"
+				// tells the server during the post that this is a json string
+			},
+			// turn data into JSON
+			body: JSON.stringify(data)
+		}
+		
+		fetch("/api/signup", options)
+		.then(response => response.json())  //gets response from server and makes into json
+    .then(data => {
+      if (data === "email used") {
+        alert("This email has already been used. Please use a different email.")
+      } else {
+        console.log(data)
+        history.push("/login")
+        // redirects user to the login page
+      }
+      
+    })
+		
+    // TODO: figure out how to let the user know on the webpage the error of a taken email
+    // TODO: figure out a new user.
+	}
+
+  function handleFNameChange(evt) {
+    setFName(evt.target.value)
+  }
+
+  function handleLNameChange(evt) {
+    setLName(evt.target.value)
+  }
+
+  function handleEmailChange(evt) {
+		setEmail(evt.target.value)
+	}
+
+	function handlePasswordChange(evt) {
+		setPassword(evt.target.value)
+	}
+
+  return (
+    <div> 
+      <h2>
+      Signup for a Recallama account 
+      </h2>
+      <form className='signUpForm' onSubmit={handleSignUp}>
+        First name:
+				<input value={fname} onChange={handleFNameChange} type="text"></input>
+        <br/>
+
+        Last name:
+				<input value={lname} onChange={handleLNameChange} type="text"></input>
+        <br/>
+
+        Email:
+				<input value={email} onChange={handleEmailChange} type="text"></input>
+				<br/>
+        
+        Password:
+				<input value={password} onChange={handlePasswordChange} type="text"></input>
+        <br/>
+
+				<button type="submit">Sign up</button>
+			</form>
+      <br/>
+      <a href='/login'>Already have an account? Click here to login.</a>
+    </div>
+  )
+}
+
+
+
+/*Teddys SignUp component
+
+function SignUp() {
+    const [fname, setFName] = useState("");
+    const [lname, setLName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    
+    const history = useHistory();
+
+    const handleSignUp = (e) => {
+        e.preventDefault();
+
+        const data = {
+            fname,
+            lname, 
+            email,
+            password
+        };
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+
+        fetch('/api/signup', options)
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => {
+                console.log(`Could not save sign up form due to ${err}`);
+            });
+    };
+  
+
+    return (
+      <div> 
+        <h2>
+        Signup for a Recallama account 
+        </h2>
+        <form className='signUpForm' onSubmit={handleSignUp}>
+          First name:
+                  <input value={fname} onChange={e => setFName(e.target.value)} type="text"></input>
+          <br/>
+  
+          Last name:
+                  <input value={lname} onChange={e => setLName(e.target.value)} type="text"></input>
+          <br/>
+  
+          Email:
+                  <input value={email} onChange={e => setEmail(e.target.value)} type="text"></input>
+                  <br/>
+          
+          Password:
+                  <input value={password} onChange={e => setPassword(e.target.value)} type="text"></input>
+          <br/>
+  
+                  <button type="submit">Sign up</button>
+              </form>
+        <br/>
+        <a href='/login'>Already have an account? Click here to login.</a>
+      </div>
+    )
+};
+
+*/
+
+function ViewProfile() {
+  if (window.user_id) 
+  return (
+    <div>
+      <h2>{window.user_name}</h2>
+      <div>
+        Here are your saved recalls:
+      </div>
+    </div>
+  )
+  else return <h2> You are not logged in.</h2>
+}
+// function PostResultItem(props) {
+//   return <li>{props.city}</li>
+// }
+
+function handleSubmit(evt) {
+  evt.preventDefault();
+}
+
+function PostResult(props) {
+  
+  const [postResultData, setPostResultData] = React.useState(["loading..."])
+
+  async function postData() {
+    const response = await fetch('/api/results', {
+      method: 'POST',
+    }) 
+    return response.json();
+  }
+  
+  React.useEffect(() => {
+    postData()
+    .then(data => {
+      setPostResultData(data)
+    })
+  }, []);
+
+
+  // console.log(postResultData)
+  return (
+    <div className='resultIndex'>
+      {postResultData.map((result, index) => (
+        <div key={index}>
+          <h3> {result.recalling_firm}</h3>
+          <p>Report Date: {result.report_date}</p>
+          <p>Description: {result.product_description}</p>
+          <p>Distribution pattern: {result.distribution_pattern}</p>
+          <p>Status: {result.status}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function SearchBar() {
+
+  const [ description, setDescription ] = React.useState("")
+  const [ status, setStatus ] = React.useState("")
+  const [ reasonForRecall, setReasonForRecall ] = React.useState("")
+  const [ recallingFirm, setRecallingFirm ] = React.useState("")
+
+	return (
+		<div>
+      <form action='/api/results' onSubmit={handleSubmit} method="POST">
+        Food Description
+        <input value={description} name="description" onChange={(e) => setDescription(e.target.value)} type='text'></input>
+        <br/>
+
+        Recall Termination Status
+        <input value={status} name="status" onChange={(e) => setStatus(e.target.value)} type='text'></input>
+        <br/>
+        
+        Reason for Recall 
+        <input value={reasonForRecall} name="reason-for-recall" onChange={(e) => setReasonForRecall(e.target.value)} type='text'></input>
+        <br/>
+
+        Recalling Firm
+        <input value={recallingFirm} name="recalling-firm" onChange={(e) => setRecallingFirm(e.target.value)} type='text'></input>
+        <br/>
+        <button type="submit">Search</button>
+      </form>
+			
+		</div>
+	)
+}
+
+function Search() {
+  return (
+    <div> 
+      <WelcomeUser/>
+      <h3>Search for recalls </h3>
+      <SearchBar/>
+      <PostResult />
+    </div>
+
+  )  
+}
+
+export default function App() {
+	return (
+		<Router>
+			<div>
+
+				{/* this is the nav bar */}
+				<nav>
+					<ul>
+						<li>
+							<Link to='/'>Home</Link>
+						</li>
+						<li>
+						<Link to='/signup'>Sign up</Link>
+						</li>
+						<li>
+						<Link to='/search'>Search</Link>
+						</li>
+						<li>
+						<Link to='/login'>Login</Link>
+						</li>
+					</ul>
+				</nav>
+		
+				{/* this is how you switch between two components */}
+				<Switch>
+					<Route path='/signup'>
+						<SignUp />
+					</Route>
+					<Route path='/login'>
+						<LogIn />
+					</Route>
+          <Route path='/profile'>
+						<ViewProfile />
+					</Route>
+					<Route path='/search'>
+						<Search />
+					</Route>
+					<Route path='/'>
+						<Homepage />
+					</Route>
+
+				</Switch>
+			</div>
+		</Router>       
+	);
+}
