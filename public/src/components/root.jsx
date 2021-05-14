@@ -11,7 +11,7 @@ const useHistory = ReactRouterDOM.useHistory;
 // const { Router, Route, Link, Prompt, Switch, Redirect } = ReactRouterDOM;
 
 import { BrowserRouter as Router, Route, Link, Prompt, Switch, Redirect, useHistory } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function WelcomeUser() {
   if (window.user_id) return <h2>Welcome {window.user_name}!</h2>
@@ -249,28 +249,67 @@ function ViewProfile() {
 
 function handleSubmit(evt) {
   evt.preventDefault();
+  const data = {
+    fname,
+    lname, 
+    email,
+    password
+  };
+
+  const options = {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+  };
+
+  fetch('/api/signup', options)
+      .then(res => {
+          return res.json();
+      })
+      .then(data => {
+          console.log(data);
+      })
+      .catch(err => {
+          console.log(`Could not save sign up form due to ${err}`);
+      });
 }
 
 function PostResult(props) {
+  const [postResultData, setPostResultData] = useState(["loading..."])
+
+  useEffect(() => {
+    if (props.search) {
+      const data = {
+        description: props.description,
+        status: props.status,
+        reasonForRecall: props.reasonForRecall,
+        recallingFirm: props.recallingFirm
+      };
   
-  const [postResultData, setPostResultData] = React.useState(["loading..."])
+      const options = {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      };
+    
+      fetch('/api/search', options)
+          .then(res => {
+            return res.json();
+          })
+          .then(data => {
+            setPostResultData(data);
+          })
+          .catch(err => {
+              console.log(`Search failed due to ${err}`);
+          });
+    }
+    props.setSearch(!props.search);
+  }, [props.search])
 
-  async function postData() {
-    const response = await fetch('/api/results', {
-      method: 'POST',
-    }) 
-    return response.json();
-  }
-  
-  React.useEffect(() => {
-    postData()
-    .then(data => {
-      setPostResultData(data)
-    })
-  }, []);
-
-
-  // console.log(postResultData)
   return (
     <div className='resultIndex'>
       {postResultData.map((result, index) => (
@@ -286,34 +325,66 @@ function PostResult(props) {
   )
 }
 
-function SearchBar() {
+function SearchBar(props) {
+  const [ description, setDescription ] = useState("");
+  const [ status, setStatus ] = useState("");
+  const [ reasonForRecall, setReasonForRecall ] = useState("");
+  const [ recallingFirm, setRecallingFirm ] = useState("");
+  const [searched, setSearched] = useState(false);
 
-  const [ description, setDescription ] = React.useState("")
-  const [ status, setStatus ] = React.useState("")
-  const [ reasonForRecall, setReasonForRecall ] = React.useState("")
-  const [ recallingFirm, setRecallingFirm ] = React.useState("")
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = {
+      description,
+      status,
+      reasonForRecall,
+      recallingFirm
+    };
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+  
+    fetch('/api/search', options)
+        .then(res => {
+            console.log(res);
+            setSearched(true);
+        })
+        .catch(err => {
+            console.log(`Search failed due to ${err}`);
+        });
+  }
 
 	return (
 		<div>
-      <form action='/api/results' onSubmit={handleSubmit} method="POST">
-        Food Description
-        <input value={description} name="description" onChange={(e) => setDescription(e.target.value)} type='text'></input>
-        <br/>
+      <div className='search-bar-container'>
+        <form action='/api/results' onSubmit={handleSubmit} method="POST">
+          Food Description
+          <input value={description} name="description" onChange={(e) => setDescription(e.target.value)} type='text'></input>
+          <br/>
 
-        Recall Termination Status
-        <input value={status} name="status" onChange={(e) => setStatus(e.target.value)} type='text'></input>
-        <br/>
-        
-        Reason for Recall 
-        <input value={reasonForRecall} name="reason-for-recall" onChange={(e) => setReasonForRecall(e.target.value)} type='text'></input>
-        <br/>
+          Recall Termination Status
+          <input value={status} name="status" onChange={(e) => setStatus(e.target.value)} type='text'></input>
+          <br/>
+          
+          Reason for Recall 
+          <input value={reasonForRecall} name="reason-for-recall" onChange={(e) => setReasonForRecall(e.target.value)} type='text'></input>
+          <br/>
 
-        Recalling Firm
-        <input value={recallingFirm} name="recalling-firm" onChange={(e) => setRecallingFirm(e.target.value)} type='text'></input>
-        <br/>
-        <button type="submit">Search</button>
-      </form>
-			
+          Recalling Firm
+          <input value={recallingFirm} name="recalling-firm" onChange={(e) => setRecallingFirm(e.target.value)} type='text'></input>
+          <br/>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div className='post-result-container'>
+        <PostResult search={searched} setSearch={setSearched} description={description} status={status} reasonForRecall={reasonForRecall} recallingFirm={recallingFirm}/>
+      </div>
 		</div>
 	)
 }
@@ -323,10 +394,8 @@ function Search() {
     <div> 
       <WelcomeUser/>
       <h3>Search for recalls </h3>
-      <SearchBar/>
-      <PostResult />
+      <SearchBar />
     </div>
-
   )  
 }
 

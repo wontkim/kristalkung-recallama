@@ -10,6 +10,11 @@ app.use('/api/signup', (req, res) => {
     res.status(200).json('Sign up was successful');
 });
 
+app.use('/api/search', (req, res) => {
+    console.log(req.body);
+    res.status(200).json('Search was successful');
+})
+
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });
