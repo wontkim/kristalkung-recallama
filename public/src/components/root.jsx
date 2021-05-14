@@ -296,7 +296,7 @@ function PostResult(props) {
           body: JSON.stringify(data)
       };
     
-      fetch('/api/search', options)
+      fetch('/api/results', options)
           .then(res => {
             return res.json();
           })
